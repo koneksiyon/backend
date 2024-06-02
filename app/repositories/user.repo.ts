@@ -6,7 +6,10 @@ const create = async (data: UserAttributes) => {
 };
 
 const retrieveAuth = async (filters: WhereOptions<UserAttributes>) => {
-  return await User.findOne({ where: filters });
+  return await User.findOne({
+    attributes: ['username', 'password'],
+    where: filters,
+  });
 };
 
 export default { create, retrieveAuth };

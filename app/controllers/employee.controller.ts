@@ -1,15 +1,10 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { UserAttributes } from '../db/models/user.model';
 import { EmployeeAttributes } from '../db/models/employee.model';
 import employeeService from '../services/employee.service';
 
-const createEmployeeController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const createEmployeeController = async (req: Request, res: Response) => {
   const {
-    username,
     password,
     role,
     firstName,
@@ -21,7 +16,7 @@ const createEmployeeController = async (
     branch,
   } = req.body;
 
-  const userData: UserAttributes = { username, password, role };
+  const userData: UserAttributes = { username: email, password, role };
   const employeeData: EmployeeAttributes = {
     firstName,
     middleName,
@@ -40,6 +35,35 @@ const createEmployeeController = async (
   return res.status(201).json(employee);
 };
 
+const getEmployeesController = async (req: Request, res: Response) => {
+  const employees = await employeeService.retrieveEmployeesService();
+  return res.status(200).json(employees);
+};
+
+const getEmployeeController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const employee = await employeeService.retrieveEmployeeByIdService(id);
+  return res.status(200).json(employee);
+};
+
+const updateEmployeeController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const details = req.body;
+
+  const employee = await employeeService.updateEmployeeService(id, details);
+  return res.status(200).json(employee);
+};
+
+const deleteEmployeeController = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await employeeService.deleteEmployeeService(id);
+  return res.status(200).json(result);
+};
+
 export default {
   createEmployeeController,
+  getEmployeesController,
+  getEmployeeController,
+  updateEmployeeController,
+  deleteEmployeeController,
 };

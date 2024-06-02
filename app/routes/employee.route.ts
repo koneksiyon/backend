@@ -4,8 +4,12 @@ const router: Router = express.Router();
 
 router.post('/', employeeController.createEmployeeController);
 
-router.get('/', (req: Request, res: Response) => {
-  res.send(`Hello from ${process.env.NODE_ENV}`);
-});
+router.get('/', employeeController.getEmployeesController);
+
+router.get('/:id', employeeController.getEmployeeController);
+
+router.put('/:id', employeeController.updateEmployeeController);
+
+router.delete('/:id', employeeController.deleteEmployeeController);
 
 export default router;
