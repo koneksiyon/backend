@@ -46,6 +46,7 @@ Employee.init(
     modelName: 'Employee',
     underscored: true,
     timestamps: true,
+    paranoid: true,
   }
 );
 

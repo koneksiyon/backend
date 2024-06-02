@@ -31,6 +31,7 @@ User.init(
     modelName: 'User',
     underscored: true,
     timestamps: true,
+    paranoid: true,
   }
 );
 
